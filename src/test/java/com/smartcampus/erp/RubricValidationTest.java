@@ -91,13 +91,13 @@ class RubricValidationTest {
         assertEquals("Bob", highRisk.get(0).getName());
 
         // Generic map to Set (unique departments)
-        Set<String> departments = CollectionUtils.mapToSet(students, Student::getDepartment);
+        Set<String> departments = CollectionUtils.mapToSet(students, s -> s.getDepartment());
         assertEquals(2, departments.size());
         assertTrue(departments.contains("CSE"));
         assertTrue(departments.contains("IT"));
 
         // Generic groupBy to Map
-        Map<RiskLevel, List<Student>> grouped = CollectionUtils.groupBy(students, Student::getRiskLevel);
+        Map<RiskLevel, List<Student>> grouped = CollectionUtils.groupBy(students, s -> s.getRiskLevel());
         assertEquals(3, grouped.size());
         assertEquals(1, grouped.get(RiskLevel.LOW).size());
     }

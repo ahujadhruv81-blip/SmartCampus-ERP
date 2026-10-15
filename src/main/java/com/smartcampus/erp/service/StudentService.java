@@ -61,13 +61,13 @@ public class StudentService {
     // Rubric: Collections & Generics (Set<String> for unique departments)
     public Set<String> getUniqueDepartments() {
         List<Student> students = studentDAO.findAll();
-        return CollectionUtils.mapToSet(students, Student::getDepartment);
+        return CollectionUtils.mapToSet(students, s -> s.getDepartment());
     }
 
     // Rubric: Collections & Generics (Map<RiskLevel, List<Student>> grouping)
     public Map<RiskLevel, List<Student>> getStudentsGroupedByRisk() {
         List<Student> students = studentDAO.findAll();
-        return CollectionUtils.groupBy(students, Student::getRiskLevel);
+        return CollectionUtils.groupBy(students, s -> s.getRiskLevel());
     }
 
     // Rubric: Collections & Generics (Generic filter method)
