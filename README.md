@@ -1,6 +1,6 @@
 # SmartCampus AI-Based ERP — Java Version
 
-This project serves the SmartCampus academic ERP design and runs it from a Java 21 Spring Boot application. Spring Boot serves the rich frontend dashboard at `/`, while exposing a modular Java backend with REST API endpoints, full Object-Oriented design, Collections and Generics, Multithreading & Synchronization, and JDBC database access.
+This project serves the SmartCampus academic ERP design and runs it from a Java 21 Spring Boot application. Spring Boot serves the rich frontend dashboard at `/`, while exposing a modular Java backend with REST API endpoints, full Object-Oriented design, Collections and Generics, Multithreading & Synchronization, and PostgreSQL / Supabase JDBC database access.
 
 ---
 
@@ -12,34 +12,40 @@ This project serves the SmartCampus academic ERP design and runs it from a Java 
 | **2. Collections & Generics** | 6 | **Present** | • **Domain Collections**: `List<Student>` for rosters, `Set<String>` for unique departments, and `Map<RiskLevel, List<Student>>` for risk grouping in [`StudentService`](file:///src/main/java/com/smartcampus/erp/service/StudentService.java#L50-L75)<br>• **Generic Interface**: [`Repository<T, ID>`](file:///src/main/java/com/smartcampus/erp/dao/Repository.java)<br>• **Generic Utility Methods**: [`CollectionUtils`](file:///src/main/java/com/smartcampus/erp/util/CollectionUtils.java) (`<T> filter()`, `<T, R> mapToSet()`, `<T, K> groupBy()`) |
 | **3. Multithreading & Synchronization** | 4 | **Present** | • **ExecutorService**: Dedicated thread pool for background batch report generation in [`ReportGenerationService`](file:///src/main/java/com/smartcampus/erp/service/ReportGenerationService.java#L23-L80)<br>• **Synchronization**: `ReentrantLock` protecting shared report registry and metrics updates, plus a `synchronized` method `recordSystemEvent()` |
 | **4. Database Operation Classes (DAO/Repository)** | 7 | **Present** | • [`StudentDAO`](file:///src/main/java/com/smartcampus/erp/dao/StudentDAO.java) with `insert`, `update`, `delete`, `findById`, `findAll`<br>• [`FacultyDAO`](file:///src/main/java/com/smartcampus/erp/dao/FacultyDAO.java) with `insert`, `update`, `delete`, `findById`, `findAll`<br>• [`CourseDAO`](file:///src/main/java/com/smartcampus/erp/dao/CourseDAO.java) with `insert`, `update`, `delete`, `findById`, `findAll` |
-| **5. Database Connectivity (JDBC)** | 3 | **Present** | • [`DBConnection`](file:///src/main/java/com/smartcampus/erp/util/DBConnection.java) utility class loading connection settings with credentials read from `application.properties` and environment variable overrides |
-| **6. Implement JDBC for Database Connectivity** | 3 | **Present** | • Real JDBC operations using `Connection`, `PreparedStatement`, and `ResultSet` with `try-with-resources` inside all DAO classes ([`StudentDAO`](file:///src/main/java/com/smartcampus/erp/dao/StudentDAO.java), [`FacultyDAO`](file:///src/main/java/com/smartcampus/erp/dao/FacultyDAO.java), [`CourseDAO`](file:///src/main/java/com/smartcampus/erp/dao/CourseDAO.java)) |
+| **5. Database Connectivity (JDBC)** | 3 | **Present** | • [`DBConnection`](file:///src/main/java/com/smartcampus/erp/util/DBConnection.java) utility class loading PostgreSQL JDBC connection settings with credentials read from `application.properties` and environment variable overrides |
+| **6. Implement JDBC for Database Connectivity** | 3 | **Present** | • Real JDBC operations using `Connection`, `PreparedStatement`, and `ResultSet` with `try-with-resources` inside all DAO classes ([`StudentDAO`](file:///src/main/java/com/smartcampus/erp/dao/StudentDAO.java), [`FacultyDAO`](file:///src/main/java/com/smartcampus/erp/dao/FacultyDAO.java), [`CourseDAO`](file:///src/main/java/com/smartcampus/erp/dao/CourseDAO.java)) targeting PostgreSQL / Supabase |
 
 ---
 
 ## Requirements
 - **JDK 21** (or JDK 17+) installed and available in terminal
 - **Maven 3.8+**
-- **MySQL 8.0+** (optional; app boots and runs test suite independently)
+- **PostgreSQL / Supabase** account or local PostgreSQL instance (app boots and runs test suite independently)
 
 ---
 
-## Setup & How to Run
+## Setup & How to Run with Supabase (PostgreSQL)
 
-### 1. Database Setup (MySQL)
-Run the DDL schema file located at [`docs/schema.sql`](file:///docs/schema.sql) in MySQL Workbench or the MySQL command line client:
-```bash
-mysql -u root -p < docs/schema.sql
-```
-This creates the `smartcampus_db` database, tables (`students`, `faculty`, `courses`, `departments`, `attendance_records`, `audit_logs`), and sample seed records.
+### 1. Database Setup (Supabase)
+1. In your [Supabase Dashboard](https://supabase.com/dashboard), open your project.
+2. Navigate to **SQL Editor** in the left sidebar.
+3. Open or paste the contents of [`docs/schema.sql`](file:///docs/schema.sql) and click **Run**.
+   - This creates tables (`students`, `faculty`, `courses`, `departments`, `attendance_records`, `audit_logs`) and seeds sample data.
 
-### 2. Configure Database Credentials (No Hardcoded Secrets)
-Connection properties are loaded from [`src/main/resources/application.properties`](file:///src/main/resources/application.properties) with placeholder defaults. You can override them via environment variables:
+### 2. Configure Database Credentials (Session Pooler)
+Use the Supabase **Session pooler** (port `5432`) connection string:
+- In Supabase, go to **Project Settings** → **Database** → **Connection pooling**.
+- Select Mode: **Session** (Port `5432`).
+- Set your environment variables in PowerShell before running the app (no secrets are stored in code):
+
 ```powershell
-$env:DB_URL="jdbc:mysql://localhost:3306/smartcampus_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
-$env:DB_USER="root"
-$env:DB_PASSWORD="your_mysql_password"
+# Example Supabase Session Pooler configuration:
+$env:DB_URL="jdbc:postgresql://aws-0-[region].pooler.supabase.com:5432/postgres?sslmode=require"
+$env:DB_USER="postgres.[your-project-ref]"
+$env:DB_PASSWORD="your_supabase_db_password"
 ```
+
+*Note: [`application.properties`](file:///src/main/resources/application.properties) contains placeholder defaults only and will automatically pick up `$env:DB_URL`, `$env:DB_USER`, and `$env:DB_PASSWORD`.*
 
 ### 3. Build and Test
 Run compilation and the rubric validation test suite:

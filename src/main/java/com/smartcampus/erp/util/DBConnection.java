@@ -37,7 +37,7 @@ public final class DBConnection {
         // Read environment variables first, then application.properties, then fallback defaults
         url = System.getenv("DB_URL");
         if (url == null || url.isBlank()) {
-            url = props.getProperty("db.url", "jdbc:mysql://localhost:3306/smartcampus_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
+            url = props.getProperty("db.url", "jdbc:postgresql://localhost:5432/postgres?sslmode=require");
             // Expand placeholder if present: ${DB_URL:default}
             if (url.startsWith("${") && url.contains(":")) {
                 int colonIdx = url.indexOf(':');
@@ -47,7 +47,7 @@ public final class DBConnection {
 
         username = System.getenv("DB_USER");
         if (username == null || username.isBlank()) {
-            username = props.getProperty("db.username", "root");
+            username = props.getProperty("db.username", "postgres");
             if (username.startsWith("${") && username.contains(":")) {
                 int colonIdx = username.indexOf(':');
                 username = username.substring(colonIdx + 1, username.length() - 1);
@@ -63,7 +63,7 @@ public final class DBConnection {
             }
         }
 
-        driverClassName = props.getProperty("db.driver-class-name", "com.mysql.cj.jdbc.Driver");
+        driverClassName = props.getProperty("db.driver-class-name", "org.postgresql.Driver");
 
         try {
             Class.forName(driverClassName);

@@ -139,6 +139,6 @@ class RubricValidationTest {
     void testDBConnectionConfiguration() {
         assertNotNull(DBConnection.getUrl());
         assertNotNull(DBConnection.getUsername());
-        assertTrue(DBConnection.getUrl().contains("mysql"));
+        assertTrue(DBConnection.getUrl().contains("postgresql"));
     }
 }
