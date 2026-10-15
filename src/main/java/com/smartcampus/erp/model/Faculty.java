@@ -3,7 +3,7 @@ package com.smartcampus.erp.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-// Rubric: Inheritance (Child Class), Interfaces (Reportable)
+// OOP: Inheritance (Child Class), Interfaces (Reportable)
 public class Faculty extends Person implements Reportable {
     private String employeeId;
     private String designation;
@@ -21,27 +21,27 @@ public class Faculty extends Person implements Reportable {
         this.specialization = specialization;
     }
 
-    // Rubric: Polymorphism (Method Overriding)
+    // OOP: Polymorphism (Method Overriding)
     @Override
     public String getRole() {
         return "FACULTY";
     }
 
-    // Rubric: Polymorphism (Method Overriding)
+    // OOP: Polymorphism (Method Overriding)
     @Override
     public String getSummary() {
         return String.format("Faculty: %s (EmpID: %s, Desig: %s, Dept: %s, Spec: %s)",
                 getName(), employeeId, designation, getDepartment(), specialization);
     }
 
-    // Rubric: Interfaces (Implementation of Reportable)
+    // OOP: Interfaces (Implementation of Reportable)
     @Override
     public String generateReport() {
         return String.format("FACULTY PERFORMANCE REPORT | Name: %s | Employee ID: %s | Designation: %s | Specialization: %s",
                 getName(), employeeId, designation, specialization);
     }
 
-    // Rubric: Interfaces (Implementation of Reportable)
+    // OOP: Interfaces (Implementation of Reportable)
     @Override
     public Map<String, Object> getReportData() {
         Map<String, Object> data = new LinkedHashMap<>();

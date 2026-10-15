@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-// Rubric: REST Endpoints utilizing Course DAO
+// Controller: REST Endpoints utilizing Course DAO
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController {

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-// Rubric: REST Endpoints utilizing Multithreading and Synchronization
+// Controller: REST Endpoints utilizing Multithreading and Synchronization
 @RestController
 @RequestMapping("/api/reports")
 public class ReportController {
@@ -24,7 +24,7 @@ public class ReportController {
         this.studentService = studentService;
     }
 
-    // Rubric: Multithreading (Asynchronous endpoint triggering background ExecutorService thread pool)
+    // Multithreading: Asynchronous endpoint triggering background ExecutorService thread pool
     @PostMapping("/batch-generate")
     public CompletableFuture<ResponseEntity<Map<String, Object>>> triggerAsyncBatchReport(
             @RequestParam(defaultValue = "Semester Academic & Risk Audit") String title) {
@@ -34,7 +34,7 @@ public class ReportController {
                 .thenApply(ResponseEntity::ok);
     }
 
-    // Rubric: Synchronization (Thread-safe reading of shared state protected by ReentrantLock)
+    // Synchronization: Thread-safe reading of shared state protected by ReentrantLock
     @GetMapping("/metrics")
     public Map<String, Object> getReportMetrics() {
         return reportGenerationService.getMetrics();

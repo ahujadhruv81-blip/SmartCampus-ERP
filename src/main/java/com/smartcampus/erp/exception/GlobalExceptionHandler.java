@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-// Rubric: Exception Handling (Global Controller Advice Catching Custom Exceptions)
+// Exception Handling: Global Controller Advice Catching Custom Exceptions
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

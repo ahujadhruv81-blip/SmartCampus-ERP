@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// Rubric: Classes for database operations (DAO), Implement JDBC for database connectivity
+// Database Operations: Student DAO implementing generic Repository with JDBC
 @Repository
 public class StudentDAO implements com.smartcampus.erp.dao.Repository<Student, Long> {
 
-    // Rubric: JDBC Connection, PreparedStatement, ResultSet with try-with-resources
+    // JDBC: Connection, PreparedStatement, ResultSet with try-with-resources
     @Override
     public Student insert(Student student) {
         String sql = "INSERT INTO students (name, email, department, roll_number, cgpa, attendance_percentage, risk_level) " +
@@ -47,7 +47,7 @@ public class StudentDAO implements com.smartcampus.erp.dao.Repository<Student, L
         }
     }
 
-    // Rubric: JDBC PreparedStatement with try-with-resources
+    // JDBC: PreparedStatement with try-with-resources
     @Override
     public boolean update(Student student) {
         String sql = "UPDATE students SET name = ?, email = ?, department = ?, roll_number = ?, " +
@@ -70,7 +70,7 @@ public class StudentDAO implements com.smartcampus.erp.dao.Repository<Student, L
         }
     }
 
-    // Rubric: JDBC PreparedStatement with try-with-resources
+    // JDBC: PreparedStatement with try-with-resources
     @Override
     public boolean delete(Long id) {
         String sql = "DELETE FROM students WHERE id = ?";
@@ -84,7 +84,7 @@ public class StudentDAO implements com.smartcampus.erp.dao.Repository<Student, L
         }
     }
 
-    // Rubric: JDBC PreparedStatement and ResultSet with try-with-resources
+    // JDBC: PreparedStatement and ResultSet with try-with-resources
     @Override
     public Optional<Student> findById(Long id) {
         String sql = "SELECT id, name, email, department, roll_number, cgpa, attendance_percentage, risk_level " +
@@ -104,7 +104,7 @@ public class StudentDAO implements com.smartcampus.erp.dao.Repository<Student, L
         }
     }
 
-    // Rubric: JDBC Statement and ResultSet with try-with-resources
+    // JDBC: Statement and ResultSet with try-with-resources
     @Override
     public List<Student> findAll() {
         String sql = "SELECT id, name, email, department, roll_number, cgpa, attendance_percentage, risk_level " +

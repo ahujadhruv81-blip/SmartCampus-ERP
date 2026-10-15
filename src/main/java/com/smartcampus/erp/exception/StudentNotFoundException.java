@@ -1,6 +1,6 @@
 package com.smartcampus.erp.exception;
 
-// Rubric: Exception Handling (Custom Exception)
+// Exception Handling: Custom Exception
 public class StudentNotFoundException extends RuntimeException {
     public StudentNotFoundException(String message) {
         super(message);

@@ -9,14 +9,14 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
-// Rubric: Multithreading & Synchronization (ExecutorService, ReentrantLock, synchronized method)
+// Multithreading & Synchronization (ExecutorService, ReentrantLock, synchronized method)
 @Service
 public class ReportGenerationService {
 
-    // Rubric: Multithreading (ExecutorService for background asynchronous execution)
+    // Multithreading: ExecutorService for background asynchronous execution
     private final ExecutorService executorService;
 
-    // Rubric: Synchronization (ReentrantLock protecting shared data structures)
+    // Synchronization: ReentrantLock protecting shared data structures
     private final ReentrantLock lock = new ReentrantLock();
 
     // Shared state across threads
@@ -36,7 +36,7 @@ public class ReportGenerationService {
         });
     }
 
-    // Rubric: Multithreading (Asynchronous processing with CompletableFuture & ExecutorService)
+    // Multithreading: Asynchronous processing with CompletableFuture & ExecutorService
     public CompletableFuture<Map<String, Object>> generateStudentBatchReportAsync(String reportTitle, List<Student> students) {
         return CompletableFuture.supplyAsync(() -> {
             String threadName = Thread.currentThread().getName();
@@ -69,7 +69,7 @@ public class ReportGenerationService {
             reportResult.put("averageCgpa", Math.round(avgCgpa * 100.0) / 100.0);
             reportResult.put("highRiskCount", highRiskCount);
 
-            // Rubric: Synchronization (ReentrantLock protecting shared state updates)
+            // Synchronization: ReentrantLock protecting shared state updates
             lock.lock();
             try {
                 totalReportsGenerated++;
@@ -80,14 +80,14 @@ public class ReportGenerationService {
                 lock.unlock();
             }
 
-            // Rubric: Synchronization (Synchronized method call)
+            // Synchronization: Synchronized method call
             recordSystemEvent("Completed batch report " + reportId + " on " + threadName);
 
             return reportResult;
         }, executorService);
     }
 
-    // Rubric: Synchronization (synchronized method protecting shared log)
+    // Synchronization: synchronized method protecting shared log
     public synchronized void recordSystemEvent(String event) {
         String logEntry = String.format("[%s] EVENT: %s", LocalDateTime.now(), event);
         executionAuditLogs.add(logEntry);

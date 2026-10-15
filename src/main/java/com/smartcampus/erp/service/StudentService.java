@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-// Rubric: OOP Implementation, Collections & Generics (List, Set, Map in Service Logic)
+// Service Layer: Business Logic, Collections (List, Set, Map), and Exception Handling
 @Service
 public class StudentService {
 
@@ -21,7 +21,7 @@ public class StudentService {
         this.studentDAO = studentDAO;
     }
 
-    // Rubric: Exception Handling (throws InvalidDataException)
+    // Exception Handling: Validation with InvalidDataException
     public Student registerStudent(Student student) {
         if (student == null) {
             throw new InvalidDataException("student", "Student payload cannot be null.");
@@ -47,30 +47,30 @@ public class StudentService {
         return studentDAO.insert(student);
     }
 
-    // Rubric: Exception Handling (throws StudentNotFoundException)
+    // Exception Handling: Custom StudentNotFoundException
     public Student getStudentById(Long id) {
         return studentDAO.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
     }
 
-    // Rubric: Collections & Generics (List<Student>)
+    // Collections & Generics: List<Student>
     public List<Student> getAllStudents() {
         return studentDAO.findAll();
     }
 
-    // Rubric: Collections & Generics (Set<String> for unique departments)
+    // Collections & Generics: Set<String> for unique departments
     public Set<String> getUniqueDepartments() {
         List<Student> students = studentDAO.findAll();
         return CollectionUtils.mapToSet(students, s -> s.getDepartment());
     }
 
-    // Rubric: Collections & Generics (Map<RiskLevel, List<Student>> grouping)
+    // Collections & Generics: Map<RiskLevel, List<Student>> grouping
     public Map<RiskLevel, List<Student>> getStudentsGroupedByRisk() {
         List<Student> students = studentDAO.findAll();
         return CollectionUtils.groupBy(students, s -> s.getRiskLevel());
     }
 
-    // Rubric: Collections & Generics (Generic filter method)
+    // Collections & Generics: Generic filter method
     public List<Student> getAtRiskStudents() {
         List<Student> students = studentDAO.findAll();
         return CollectionUtils.filter(students, s -> s.getRiskLevel() == RiskLevel.HIGH || s.getRiskLevel() == RiskLevel.MEDIUM);
@@ -91,7 +91,7 @@ public class StudentService {
         return studentDAO.delete(id);
     }
 
-    // Rubric: Polymorphism (Invoking overridden methods on Person & Reportable interfaces)
+    // Polymorphism: Invoking overridden methods on Person & Reportable interfaces
     public String generatePersonSummary(Person person) {
         return person.getSummary(); // Polymorphic invocation
     }

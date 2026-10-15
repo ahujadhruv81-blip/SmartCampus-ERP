@@ -4,7 +4,7 @@ import com.smartcampus.erp.service.RiskLevel;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-// Rubric: Inheritance (Child Class), Interfaces (Reportable)
+// OOP: Inheritance (Child Class), Interfaces (Reportable)
 public class Student extends Person implements Reportable {
     private String rollNumber;
     private double cgpa;
@@ -24,27 +24,27 @@ public class Student extends Person implements Reportable {
         this.riskLevel = riskLevel;
     }
 
-    // Rubric: Polymorphism (Method Overriding)
+    // OOP: Polymorphism (Method Overriding)
     @Override
     public String getRole() {
         return "STUDENT";
     }
 
-    // Rubric: Polymorphism (Method Overriding)
+    // OOP: Polymorphism (Method Overriding)
     @Override
     public String getSummary() {
         return String.format("Student: %s (Roll: %s, Dept: %s, CGPA: %.2f, Attendance: %.1f%%, Risk: %s)",
                 getName(), rollNumber, getDepartment(), cgpa, attendancePercentage, riskLevel);
     }
 
-    // Rubric: Interfaces (Implementation of Reportable)
+    // OOP: Interfaces (Implementation of Reportable)
     @Override
     public String generateReport() {
         return String.format("ACADEMIC REPORT | Student: %s | Roll No: %s | CGPA: %.2f | Attendance: %.1f%% | Status: %s",
                 getName(), rollNumber, cgpa, attendancePercentage, riskLevel);
     }
 
-    // Rubric: Interfaces (Implementation of Reportable)
+    // OOP: Interfaces (Implementation of Reportable)
     @Override
     public Map<String, Object> getReportData() {
         Map<String, Object> data = new LinkedHashMap<>();

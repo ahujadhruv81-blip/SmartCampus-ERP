@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-// Rubric: Collections & Generics (Generic Utility Methods)
+// Collections & Generics: Generic Utility Methods
 public final class CollectionUtils {
 
     private CollectionUtils() {

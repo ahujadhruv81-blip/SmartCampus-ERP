@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-// Rubric: REST Endpoints utilizing OOP, Collections, Exception Handling, DAOs
+// Controller: REST Endpoints utilizing OOP, Collections, Exception Handling, and DAOs
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
@@ -22,20 +22,20 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    // Rubric: Exception Handling (calls service method throwing InvalidDataException)
+    // Exception Handling: calls service method throwing InvalidDataException
     @PostMapping
     public ResponseEntity<Student> registerStudent(@RequestBody Student student) {
         Student created = studentService.registerStudent(student);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // Rubric: Collections & Generics (List<Student>)
+    // Collections & Generics: List<Student>
     @GetMapping
     public List<Student> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-    // Rubric: Exception Handling (throws StudentNotFoundException when not found)
+    // Exception Handling: throws StudentNotFoundException when not found
     @GetMapping("/{id}")
     public Student getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
@@ -53,25 +53,25 @@ public class StudentController {
         return Map.of("success", deleted, "studentId", id);
     }
 
-    // Rubric: Collections & Generics (Set<String>)
+    // Collections & Generics: Set<String>
     @GetMapping("/departments")
     public Set<String> getUniqueDepartments() {
         return studentService.getUniqueDepartments();
     }
 
-    // Rubric: Collections & Generics (Map<RiskLevel, List<Student>>)
+    // Collections & Generics: Map<RiskLevel, List<Student>>
     @GetMapping("/by-risk")
     public Map<RiskLevel, List<Student>> getStudentsByRisk() {
         return studentService.getStudentsGroupedByRisk();
     }
 
-    // Rubric: Collections & Generics (Generic filter method)
+    // Collections & Generics: Generic filter method
     @GetMapping("/at-risk")
     public List<Student> getAtRiskStudents() {
         return studentService.getAtRiskStudents();
     }
 
-    // Rubric: Polymorphism & Interfaces (invoking generateReport on Reportable Student)
+    // Polymorphism & Interfaces: invoking generateReport on Reportable Student
     @GetMapping("/{id}/report")
     public Map<String, Object> getStudentReport(@PathVariable Long id) {
         Student student = studentService.getStudentById(id);

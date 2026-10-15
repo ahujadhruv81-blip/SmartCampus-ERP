@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// Rubric: Classes for database operations (DAO), Implement JDBC for database connectivity
+// Database Operations: Faculty DAO implementing generic Repository with JDBC
 @Repository
 public class FacultyDAO implements com.smartcampus.erp.dao.Repository<Faculty, Long> {
 

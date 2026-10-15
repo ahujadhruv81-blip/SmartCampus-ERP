@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-// Rubric: REST Endpoints utilizing DAO, OOP (Polymorphism, Interfaces)
+// Controller: REST Endpoints utilizing Faculty DAO, Polymorphism, and Interfaces
 @RestController
 @RequestMapping("/api/faculty")
 public class FacultyController {
@@ -45,7 +45,7 @@ public class FacultyController {
                 .orElseThrow(() -> new StudentNotFoundException("Faculty member with ID " + id + " not found."));
     }
 
-    // Rubric: Polymorphism (Invoking Reportable interface on Faculty)
+    // Polymorphism: Invoking Reportable interface on Faculty
     @GetMapping("/{id}/report")
     public Map<String, Object> getFacultyReport(@PathVariable Long id) {
         Faculty faculty = getFacultyById(id);

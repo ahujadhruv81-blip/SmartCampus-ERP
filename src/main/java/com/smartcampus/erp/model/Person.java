@@ -1,6 +1,6 @@
 package com.smartcampus.erp.model;
 
-// Rubric: Inheritance (Abstract Base Class)
+// OOP: Inheritance (Abstract Base Class)
 public abstract class Person {
     private Long id;
     private String name;
@@ -17,7 +17,7 @@ public abstract class Person {
         this.department = department;
     }
 
-    // Rubric: Polymorphism (Abstract Methods overridden by child classes)
+    // OOP: Polymorphism (Abstract Methods overridden by child classes)
     public abstract String getRole();
     public abstract String getSummary();
 

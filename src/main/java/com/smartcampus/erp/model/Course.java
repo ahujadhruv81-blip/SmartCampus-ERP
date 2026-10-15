@@ -1,6 +1,6 @@
 package com.smartcampus.erp.model;
 
-// Rubric: Classes for database operations (Entity Model)
+// Database Operations: Course Entity Model
 public class Course {
     private Long id;
     private String courseCode;

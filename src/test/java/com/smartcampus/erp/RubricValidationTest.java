@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RubricValidationTest {
 
     // =========================================================================
-    // Rubric 1: OOP Implementation (Polymorphism, Inheritance, Interfaces, Exceptions)
+    // Core OOP Implementation (Polymorphism, Inheritance, Interfaces, Exceptions)
     // =========================================================================
 
     @Test
@@ -73,7 +73,7 @@ class RubricValidationTest {
     }
 
     // =========================================================================
-    // Rubric 2: Collections & Generics (List, Set, Map, Generic methods)
+    // Collections & Generics (List, Set, Map, Generic methods)
     // =========================================================================
 
     @Test
@@ -103,7 +103,7 @@ class RubricValidationTest {
     }
 
     // =========================================================================
-    // Rubric 3: Multithreading & Synchronization (ExecutorService, ReentrantLock)
+    // Multithreading & Synchronization (ExecutorService, ReentrantLock)
     // =========================================================================
 
     @Test
@@ -131,7 +131,7 @@ class RubricValidationTest {
     }
 
     // =========================================================================
-    // Rubric 5 & 6: Database Connectivity (JDBC)
+    // Database Connectivity (JDBC)
     // =========================================================================
 
     @Test

@@ -1,6 +1,6 @@
 package com.smartcampus.erp.exception;
 
-// Rubric: Exception Handling (Custom Exception)
+// Exception Handling: Custom Exception
 public class DatabaseOperationException extends RuntimeException {
     public DatabaseOperationException(String message) {
         super(message);

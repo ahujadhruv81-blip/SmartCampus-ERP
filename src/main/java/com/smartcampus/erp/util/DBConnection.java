@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-// Rubric: Database Connectivity (JDBC) - Utility Class
+// Database Connectivity (JDBC) - Utility Class
 public final class DBConnection {
 
     private static String url;
@@ -72,7 +72,7 @@ public final class DBConnection {
         }
     }
 
-    // Rubric: JDBC Connection method
+    // JDBC Connection method
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, username, password);
     }
