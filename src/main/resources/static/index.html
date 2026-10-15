@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartCampus — Intelligent Academic ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12203D;
+  --ink-2:#1C2E52;
+  --paper:#F3F0E8;
+  --paper-2:#EAE5D8;
+  --card:#FFFFFF;
+  --line:#D8D2C0;
+  --slate:#5C6478;
+  --slate-soft:#8B8FA0;
+  --amber:#D98E2C;
+  --amber-soft:#F6E3C0;
+  --green:#3E7D58;
+  --green-soft:#DCEBE0;
+  --red:#B8443B;
+  --red-soft:#F4DCD8;
+  --white:#FFFFFF;
+  --radius:2px;
+  --shadow: 0 1px 0 rgba(18,32,61,0.06), 0 8px 24px -12px rgba(18,32,61,0.18);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans', sans-serif;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:'IBM Plex Mono', monospace;}
+.serif{font-family:'Fraunces', serif;}
+
+/* ===== Notice-board texture header rule ===== */
+.masthead{
+  border-bottom:1px solid var(--ink);
+  padding:14px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:var(--paper);
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.masthead .brand{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+}
+.brand .mark{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:22px;
+  letter-spacing:-0.02em;
+}
+.brand .tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--slate);
+  border-left:1px solid var(--line);
+  padding-left:10px;
+}
+.masthead .who{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--slate);
+}
+.who .badge{
+  background:var(--ink);
+  color:var(--paper);
+  padding:5px 10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-size:10px;
+}
+.who button{
+  background:none;
+  border:1px solid var(--line);
+  padding:6px 10px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  cursor:pointer;
+  color:var(--ink);
+}
+.who button:hover{border-color:var(--ink);}
+
+/* ===== Login / role select screen ===== */
+#loginScreen{
+  min-height:calc(100vh - 54px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
+}
+.login-wrap{
+  max-width:920px;
+  width:100%;
+}
+.login-eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:10px;
+}
+.login-title{
+  font-family:'Fraunces', serif;
+  font-size:clamp(32px,5vw,52px);
+  font-weight:600;
+  line-height:1.05;
+  letter-spacing:-0.01em;
+  max-width:760px;
+  margin:0 0 14px 0;
+}
+.login-sub{
+  color:var(--slate);
+  font-size:15px;
+  max-width:560px;
+  line-height:1.55;
+  margin-bottom:36px;
+}
+.id-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.id-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:22px 20px 20px;
+  cursor:pointer;
+  text-align:left;
+  position:relative;
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  font-family:'IBM Plex Sans', sans-serif;
+}
+.id-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+  border-color:var(--ink);
+}
+.id-card .punch{
+  position:absolute; top:16px; right:16px;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--paper-2);
+  border:1px solid var(--line);
+}
+.id-card .role-no{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  color:var(--slate-soft);
+  letter-spacing:0.1em;
+  margin-bottom:14px;
+}
+.id-card .role-name{
+  font-family:'Fraunces', serif;
+  font-size:22px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+.id-card .role-desc{
+  font-size:12.5px;
+  color:var(--slate);
+  line-height:1.5;
+}
+.id-card .role-access{
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px dashed var(--line);
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  color:var(--amber);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+}
+.login-field{
+  width:100%;
+  border:1px solid var(--line);
+  background:var(--paper);
+  padding:9px 10px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  margin-top:10px;
+  outline:none;
+}
+.login-field:focus{border-color:var(--ink);}
+.login-btn{
+  width:100%;
+  margin-top:12px;
+  background:var(--ink);
+  color:var(--paper);
+  border:none;
+  padding:10px 12px;
+  font-family:'IBM Plex Sans', sans-serif;
+  font-size:12.5px;
+  font-weight:600;
+  cursor:pointer;
+  letter-spacing:0.01em;
+}
+.login-btn:hover{background:var(--ink-2);}
+
+/* ===== App shell ===== */
+#appScreen{display:none;}
+.shell{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  min-height:calc(100vh - 54px);
+}
+.sidebar{
+  border-right:1px solid var(--line);
+  padding:24px 0;
+  background:var(--paper);
+}
+.sidebar .sec-label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--slate-soft);
+  padding:0 22px;
+  margin:18px 0 8px;
+}
+.sidebar .sec-label:first-child{margin-top:0;}
+.navitem{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 22px;
+  font-size:13.5px;
+  color:var(--ink);
+  cursor:pointer;
+  border-left:2px solid transparent;
+}
+.navitem:hover{background:var(--paper-2);}
+.navitem.active{
+  border-left:2px solid var(--amber);
+  background:var(--paper-2);
+  font-weight:600;
+}
+.main{
+  padding:30px 36px 60px;
+  overflow-x:hidden;
+}
+.page-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-bottom:26px;
+  flex-wrap:wrap;
+  gap:14px;
+}
+.page-title{
+  font-family:'Fraunces', serif;
+  font-size:28px;
+  font-weight:600;
+}
+.page-meta{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--slate);
+}
+
+/* ===== Cards / grid ===== */
+.grid{display:grid; gap:16px;}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-2{grid-template-columns:2fr 1fr;}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:20px;
+}
+.card-label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--slate);
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.stat-num{
+  font-family:'Fraunces', serif;
+  font-size:34px;
+  font-weight:600;
+  line-height:1;
+}
+.stat-sub{
+  font-size:11.5px;
+  color:var(--slate);
+  margin-top:6px;
+}
+.pill{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  padding:3px 8px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  border-radius:2px;
+}
+.pill-green{background:var(--green-soft); color:var(--green);}
+.pill-amber{background:var(--amber-soft); color:#8A5A16;}
+.pill-red{background:var(--red-soft); color:var(--red);}
+
+/* gauge */
+.gauge-wrap{display:flex; align-items:center; gap:18px;}
+.gauge-num{font-family:'Fraunces',serif; font-size:40px; font-weight:600;}
+
+/* subject bars */
+.subj-row{
+  display:grid;
+  grid-template-columns:110px 1fr 50px;
+  align-items:center;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid var(--paper-2);
+  font-size:12.5px;
+}
+.subj-row:last-child{border-bottom:none;}
+.bar-track{
+  height:8px;
+  background:var(--paper-2);
+  position:relative;
+  overflow:hidden;
+}
+.bar-fill{
+  height:100%;
+  transition:width .6s ease;
+}
+.subj-score{font-family:'IBM Plex Mono', monospace; text-align:right; font-size:12px;}
+
+/* AI recommendation block */
+.reco{
+  border-left:3px solid var(--amber);
+  background:var(--amber-soft);
+  padding:14px 16px;
+  margin-top:8px;
+}
+.reco-title{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:#8A5A16;
+  margin-bottom:8px;
+  display:flex; align-items:center; gap:6px;
+}
+.reco ul{margin:0; padding-left:18px; font-size:13px; line-height:1.7;}
+
+/* notice / notification ticker */
+.notice{
+  display:flex;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid var(--paper-2);
+  align-items:flex-start;
+}
+.notice:last-child{border-bottom:none;}
+.notice .dot{
+  width:7px;height:7px;border-radius:50%;
+  margin-top:5px; flex-shrink:0;
+}
+.notice-text{font-size:13px; line-height:1.5;}
+.notice-time{font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--slate-soft); margin-top:2px;}
+
+/* table (faculty / admin) */
+table{width:100%; border-collapse:collapse; font-size:13px;}
+th{
+  text-align:left;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--slate);
+  padding:8px 10px;
+  border-bottom:1px solid var(--ink);
+}
+td{padding:10px 10px; border-bottom:1px solid var(--paper-2); vertical-align:middle;}
+tr:hover td{background:var(--paper-2);}
+.name-cell{display:flex; flex-direction:column;}
+.name-cell .id{font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--slate-soft);}
+.btn{
+  background:var(--ink);
+  color:var(--paper);
+  border:none;
+  padding:7px 12px;
+  font-size:11.5px;
+  font-family:'IBM Plex Sans', sans-serif;
+  cursor:pointer;
+}
+.btn:hover{background:var(--ink-2);}
+.btn-ghost{
+  background:none;
+  border:1px solid var(--line);
+  color:var(--ink);
+  padding:7px 12px;
+  font-size:11.5px;
+  cursor:pointer;
+}
+.btn-ghost:hover{border-color:var(--ink);}
+
+/* chart bars (canvas replacement, css bars) */
+.chartbar-wrap{display:flex; align-items:flex-end; gap:10px; height:160px; padding-top:10px;}
+.chartbar-col{flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end;}
+.chartbar{width:100%; background:var(--ink); transition:height .6s ease; position:relative;}
+.chartbar-lbl{font-family:'IBM Plex Mono', monospace; font-size:9.5px; color:var(--slate);}
+.chartbar-val{font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--ink); margin-bottom:2px;}
+
+/* workflow strip */
+.flow{display:flex; align-items:center; flex-wrap:wrap; gap:0; margin-top:10px;}
+.flow-step{
+  background:var(--card);
+  border:1px solid var(--line);
+  padding:10px 14px;
+  font-size:12px;
+  font-family:'IBM Plex Mono', monospace;
+  white-space:nowrap;
+}
+.flow-step.hot{border-color:var(--red); color:var(--red);}
+.flow-arrow{color:var(--slate-soft); padding:0 8px; font-size:14px;}
+
+/* chatbot */
+.chat-fab{
+  position:fixed; bottom:24px; right:24px;
+  width:52px; height:52px;
+  background:var(--ink); color:var(--paper);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:var(--shadow);
+  font-size:20px; z-index:100;
+  border:2px solid var(--paper);
+}
+.chat-panel{
+  position:fixed; bottom:88px; right:24px;
+  width:340px; max-height:440px;
+  background:var(--card); border:1px solid var(--ink);
+  display:none; flex-direction:column;
+  box-shadow:var(--shadow); z-index:100;
+}
+.chat-panel.open{display:flex;}
+.chat-head{
+  background:var(--ink); color:var(--paper);
+  padding:12px 14px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.chat-head .t{font-family:'Fraunces', serif; font-weight:600; font-size:14px;}
+.chat-head .s{font-family:'IBM Plex Mono', monospace; font-size:9.5px; color:var(--amber-soft); opacity:.8;}
+.chat-body{flex:1; overflow-y:auto; padding:12px 14px; display:flex; flex-direction:column; gap:10px;}
+.msg{max-width:85%; font-size:12.5px; line-height:1.5; padding:8px 10px;}
+.msg.bot{background:var(--paper-2); align-self:flex-start;}
+.msg.user{background:var(--ink); color:var(--paper); align-self:flex-end;}
+.chat-suggest{display:flex; flex-wrap:wrap; gap:6px; padding:0 14px 10px;}
+.chip{
+  font-family:'IBM Plex Mono', monospace; font-size:10px;
+  border:1px solid var(--line); padding:5px 8px; cursor:pointer;
+}
+.chip:hover{border-color:var(--ink);}
+.chat-input{
+  display:flex; border-top:1px solid var(--line);
+}
+.chat-input input{
+  flex:1; border:none; padding:10px 12px; font-family:'IBM Plex Sans'; font-size:12.5px; outline:none;
+}
+.chat-input button{
+  background:var(--ink); color:var(--paper); border:none; padding:0 16px; cursor:pointer; font-size:13px;
+}
+
+.section-note{font-size:11.5px; color:var(--slate-soft); margin-top:14px; font-style:italic;}
+
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .grid-4,.grid-3{grid-template-columns:repeat(2,1fr);}
+  .grid-2{grid-template-columns:1fr;}
+  .id-row{grid-template-columns:1fr;}
+  .chat-panel{width:88vw; right:6vw;}
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="brand">
+    <span class="mark">SmartCampus</span>
+    <span class="tag">Academic ERP + AI Engine</span>
+  </div>
+  <div class="who" id="whoBox" style="display:none;">
+    <span class="badge" id="roleBadge">STUDENT</span>
+    <span id="whoName">—</span>
+    <button onclick="logout()">Switch role</button>
+  </div>
+</div>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="loginScreen">
+  <div class="login-wrap">
+    <div class="id-row">
+      <div class="id-card">
+        <div class="punch"></div>
+        <div class="role-no">ACCESS · 04</div>
+        <div class="role-name">Student</div>
+        <div class="role-desc">Enter any admission number — the dashboard is generated live for that student. Leave it blank and we'll assign one.</div>
+        <input class="login-field" id="stuAdmNo" placeholder="Admission No. (e.g. CSE22-0184)">
+        <input class="login-field" id="stuName" placeholder="Name (optional)">
+        <button class="login-btn" onclick="loginStudent()">Enter as student →</button>
+        <div class="role-access">Scope: self only</div>
+      </div>
+      <div class="id-card">
+        <div class="punch"></div>
+        <div class="role-no">ACCESS · 03</div>
+        <div class="role-name">Faculty</div>
+        <div class="role-desc">Enter your employee ID or name — you'll see your own section and roster, not a fixed sample.</div>
+        <input class="login-field" id="facEmpId" placeholder="Employee ID (e.g. FAC-0021)">
+        <input class="login-field" id="facName" placeholder="Name (optional)">
+        <button class="login-btn" onclick="loginFaculty()">Enter as faculty →</button>
+        <div class="role-access">Scope: assigned sections</div>
+      </div>
+      <div class="id-card">
+        <div class="punch"></div>
+        <div class="role-no">ACCESS · 01</div>
+        <div class="role-name">Admin / HOD</div>
+        <div class="role-desc">Enter an admin ID, or leave blank — department-wide analytics either way.</div>
+        <input class="login-field" id="admId" placeholder="Admin ID (optional)">
+        <button class="login-btn" onclick="loginAdmin()">Enter as admin →</button>
+        <div class="role-access">Scope: full department</div>
+      </div>
+    </div>
+    <p class="section-note">Every ID above generates a real, consistent dashboard on the fly — same ID always returns the same data, so it behaves like a live ERP lookup rather than one fixed demo student. Wire it to the real ERP via the API layer in the deck (REST / CSV import / webhooks) to go live.</p>
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="appScreen">
+<div class="shell">
+  <div class="sidebar" id="sidebarNav"></div>
+  <div class="main" id="mainContent"></div>
+</div>
+</div>
+
+<!-- Chatbot -->
+<div class="chat-fab" onclick="toggleChat()">💬</div>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div>
+      <div class="t">EduBot</div>
+      <div class="s">Ask about attendance, marks, exams, fees</div>
+    </div>
+    <div style="cursor:pointer;font-size:16px;" onclick="toggleChat()">✕</div>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-suggest" id="chatSuggest"></div>
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Type a question…" onkeydown="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<script>
+/* ============ SEEDED GENERATOR — same ID always returns the same data ============ */
+function hashSeed(str){
+  let h = 1779033703 ^ str.length;
+  for(let i=0;i<str.length;i++){
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return function(){
+    h = Math.imul(h ^ (h >>> 16), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    h ^= h >>> 16;
+    return (h >>> 0) / 4294967296;
+  };
+}
+function randRange(rng, min, max){ return Math.round(min + rng()*(max-min)); }
+function pick(rng, arr){ return arr[Math.floor(rng()*arr.length)]; }
+
+const FIRST_NAMES = ["Rahul","Priya","Aman","Sara","Vikram","Neha","Karan","Ananya","Rohit","Isha","Arjun","Divya","Kabir","Meera","Yash","Tanya","Aditya","Pooja","Nikhil","Riya"];
+const LAST_NAMES = ["Sharma","Nair","Gupta","Khan","Rao","Joshi","Verma","Singh","Iyer","Reddy","Kapoor","Mehta","Das","Chauhan","Bose","Malhotra"];
+const SUBJECT_POOL = ["DBMS","Java","Maths III","AI / ML","OS","Computer Networks","Data Structures","Web Technologies"];
+
+function generateStudentData(admissionNo, providedName){
+  const seedStr = (admissionNo || "AUTO-"+Date.now()).toUpperCase().trim();
+  const rng = hashSeed(seedStr);
+  const name = (providedName && providedName.trim()) || (pick(rng,FIRST_NAMES)+" "+pick(rng,LAST_NAMES));
+  const id = admissionNo && admissionNo.trim() ? admissionNo.trim().toUpperCase() : "CSE"+randRange(rng,21,24)+"-0"+randRange(rng,100,999);
+  const year = pick(rng,["1st Year, B.Tech CSE","2nd Year, B.Tech CSE","3rd Year, B.Tech CSE","4th Year, B.Tech CSE"]);
+  const subjNames = [...SUBJECT_POOL].sort(()=>rng()-0.5).slice(0,5);
+  const subjects = subjNames.map(n=>({name:n, score:randRange(rng,45,97), attendance:randRange(rng,48,98)}));
+  const totalT = 100;
+  const overallAtt = Math.round(subjects.reduce((a,s)=>a+s.attendance,0)/subjects.length);
+  const cgpa = (5 + rng()*4.5).toFixed(2);
+  const assignmentsTotal = randRange(rng,5,8);
+  const assignmentsDone = Math.max(0, assignmentsTotal - randRange(rng,0,3));
+  const worst = [...subjects].sort((a,b)=>a.attendance-b.attendance)[0];
+  const best = [...subjects].sort((a,b)=>b.score-a.score)[0];
+  const feePaid = rng() > 0.25;
+  const notifications = [];
+  if(overallAtt < 75) notifications.push({type:"red", text:`Attendance in ${worst.name} has dropped to ${worst.attendance}% — below the 75% requirement.`, time:"2h ago"});
+  if(assignmentsDone < assignmentsTotal) notifications.push({type:"amber", text:`${assignmentsTotal-assignmentsDone} assignment(s) still pending submission.`, time:"5h ago"});
+  notifications.push({type:"green", text:`${best.name} internal marks published — you scored ${best.score}%.`, time:"1d ago"});
+  notifications.push({type: feePaid ? "amber" : "red", text: feePaid ? "Fee receipt for this semester generated." : "Semester fee payment is overdue.", time:"3d ago"});
+  return {
+    name, id, year, cgpa,
+    attendedTotal:{P:overallAtt, T:totalT},
+    subjects, assignmentsDone, assignmentsTotal,
+    fee:{status: feePaid ? "Paid" : "Due", due: feePaid ? "—" : "Overdue"},
+    nextExam:{subject:worst.name, date: pick(rng,["28 Aug","02 Sep","05 Sep","09 Sep"]), time: pick(rng,["9:00 AM","10:00 AM","1:00 PM"])},
+    notifications
+  };
+}
+
+function generateFacultyRoster(seedStr, count){
+  const rng = hashSeed(seedStr+"-roster");
+  const roster = [];
+  const used = new Set();
+  for(let i=0;i<count;i++){
+    let nm;
+    do{ nm = pick(rng,FIRST_NAMES)+" "+pick(rng,LAST_NAMES); } while(used.has(nm));
+    used.add(nm);
+    roster.push({
+      name:nm,
+      id:"CSE"+randRange(rng,21,24)+"-0"+randRange(rng,100,999),
+      attendance:randRange(rng,45,98),
+      marks:randRange(rng,40,97),
+      missing:randRange(rng,0,5),
+    });
+  }
+  return roster;
+}
+function generateFacultyData(empId, providedName){
+  const seedStr = (empId || "AUTO-"+Date.now()).toUpperCase().trim();
+  const rng = hashSeed(seedStr);
+  const name = (providedName && providedName.trim()) || ("Prof. "+pick(rng,FIRST_NAMES)+" "+pick(rng,LAST_NAMES));
+  const id = empId && empId.trim() ? empId.trim().toUpperCase() : "FAC-"+randRange(rng,1000,9999);
+  const subject = pick(rng, SUBJECT_POOL);
+  const section = pick(rng,["Sec A","Sec B","Sec C"]);
+  const roster = generateFacultyRoster(seedStr, randRange(rng,6,9));
+  return { name, id, subject, section, roster };
+}
+
+/* ============ ACTIVE SESSION DATA (populated at login) ============ */
+let student = null;
+let facultyStudents = [];
+let facultyMeta = {name:"", id:"", subject:"", section:""};
+
+const deptStats = {
+  totalStudents:2450, avgAttendance:81, atRisk:137, pendingAssignments:312, avgCGPA:8.1,
+  byDept:[
+    {name:"CSE", attendance:79}, {name:"ECE", attendance:83}, {name:"MECH", attendance:76},
+    {name:"CIVIL", attendance:85}, {name:"IT", attendance:80}, {name:"EEE", attendance:82},
+  ]
+};
+
+/* ============ AI LOGIC ============ */
+function classesNeededFor75(P,T){
+  // (P+x)/(T+x) = 0.75  ->  x = 3T - 4P
+  const x = Math.ceil(3*T - 4*P/1); // P,T are counts not %; handled at call site
+  return x;
+}
+function riskLevel(attendance, marks, missing){
+  let score = 0;
+  if(attendance < 75) score += 2; if(attendance < 60) score += 1;
+  if(marks < 60) score += 2; if(marks < 45) score += 1;
+  score += Math.min(missing,3)*0.6;
+  if(score >= 4) return {level:"High", color:"red"};
+  if(score >= 2) return {level:"Medium", color:"amber"};
+  return {level:"Low", color:"green"};
+}
+function pillClass(c){ return c==='green'?'pill-green':c==='amber'?'pill-amber':'pill-red'; }
+function barColor(v){ return v>=75?'var(--green)': v>=60?'var(--amber)':'var(--red)'; }
+
+/* ============ NAV CONFIG ============ */
+const NAV = {
+  student:[
+    {sec:"Overview", items:[["dash","Dashboard"],["subjects","Subjects & Marks"],["attendance","Attendance"]]},
+    {sec:"Records", items:[["assign","Assignments"],["timetable","Timetable"],["fees","Fees"]]},
+    {sec:"Updates", items:[["notices","Notices"]]},
+  ],
+  faculty:[
+    {sec:"Class", items:[["fdash","Overview"],["fattendance","Mark Attendance"],["fmarks","Upload Marks"]]},
+    {sec:"Insights", items:[["frisk","At-Risk Students"]]},
+    {sec:"Outreach", items:[["fannounce","Send Announcement"]]},
+  ],
+  admin:[
+    {sec:"Institution", items:[["adash","Analytics"],["adept","Department Attendance"]]},
+    {sec:"Automation", items:[["aworkflow","Automation Workflow"],["aerp","ERP Integration"]]},
+  ]
+};
+
+let currentRole = null;
+let currentPage = null;
+
+function loginStudent(){
+  const admNo = document.getElementById('stuAdmNo').value;
+  const nm = document.getElementById('stuName').value;
+  student = generateStudentData(admNo, nm);
+  enterApp('student', `${student.name} · ${student.id}`);
+}
+function loginFaculty(){
+  const empId = document.getElementById('facEmpId').value;
+  const nm = document.getElementById('facName').value;
+  const data = generateFacultyData(empId, nm);
+  facultyMeta = data;
+  facultyStudents = data.roster;
+  enterApp('faculty', `${data.name} · ${data.id}`);
+}
+function loginAdmin(){
+  const admId = document.getElementById('admId').value.trim();
+  enterApp('admin', admId ? `Admin ${admId.toUpperCase()} · CSE Dept.` : "HOD Office · CSE Dept.");
+}
+function enterApp(role, whoLabel){
+  currentRole = role;
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appScreen').style.display='block';
+  document.getElementById('whoBox').style.display='flex';
+  document.getElementById('roleBadge').textContent = role;
+  document.getElementById('whoName').textContent = whoLabel;
+  buildSidebar(role);
+  const firstPage = NAV[role][0].items[0][0];
+  navigate(firstPage);
+  seedChat(role);
+}
+function logout(){
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('appScreen').style.display='none';
+  document.getElementById('whoBox').style.display='none';
+  document.getElementById('chatPanel').classList.remove('open');
+  ['stuAdmNo','stuName','facEmpId','facName','admId'].forEach(id=>{
+    const el = document.getElementById(id); if(el) el.value='';
+  });
+  student = null; facultyStudents = []; facultyMeta = {name:"", id:"", subject:"", section:""};
+}
+function buildSidebar(role){
+  const nav = document.getElementById('sidebarNav');
+  nav.innerHTML='';
+  NAV[role].forEach(group=>{
+    const lbl = document.createElement('div');
+    lbl.className='sec-label'; lbl.textContent=group.sec;
+    nav.appendChild(lbl);
+    group.items.forEach(([key,label])=>{
+      const item = document.createElement('div');
+      item.className='navitem'; item.id='nav-'+key; item.textContent=label;
+      item.onclick=()=>navigate(key);
+      nav.appendChild(item);
+    });
+  });
+}
+function navigate(key){
+  currentPage = key;
+  document.querySelectorAll('.navitem').forEach(n=>n.classList.remove('active'));
+  const el = document.getElementById('nav-'+key);
+  if(el) el.classList.add('active');
+  const renderers = {
+    dash:renderStudentDash, subjects:renderStudentSubjects, attendance:renderStudentAttendance,
+    assign:renderStudentAssign, timetable:renderStudentTimetable, fees:renderStudentFees, notices:renderStudentNotices,
+    fdash:renderFacultyDash, fattendance:renderFacultyAttendance, fmarks:renderFacultyMarks,
+    frisk:renderFacultyRisk, fannounce:renderFacultyAnnounce,
+    adash:renderAdminDash, adept:renderAdminDept, aworkflow:renderAdminWorkflow, aerp:renderAdminERP
+  };
+  document.getElementById('mainContent').innerHTML='';
+  renderers[key]();
+}
+
+/* ============ STUDENT VIEWS ============ */
+function pageHead(title, meta){
+  return `<div class="page-head"><div class="page-title">${title}</div><div class="page-meta">${meta}</div></div>`;
+}
+function renderStudentDash(){
+  const m = document.getElementById('mainContent');
+  const att = student.attendedTotal.P;
+  const worst = [...student.subjects].sort((a,b)=>a.attendance-b.attendance)[0];
+  const x = classesNeededFor75(student.attendedTotal.P, student.attendedTotal.T);
+  m.innerHTML = pageHead("Good morning, Rahul", "Wed · 26 Aug 2026") + `
+  <div class="grid grid-4">
+    <div class="card"><div class="card-label">Overall Attendance <span class="pill ${pillClass(att>=75?'green':att>=60?'amber':'red')}">${att>=75?'On track':'Risk'}</span></div>
+      <div class="stat-num">${att}%</div><div class="stat-sub">62 of 100 classes attended</div></div>
+    <div class="card"><div class="card-label">CGPA</div>
+      <div class="stat-num">${student.cgpa}</div><div class="stat-sub">Semester 5, provisional</div></div>
+    <div class="card"><div class="card-label">Assignments</div>
+      <div class="stat-num">${student.assignmentsDone}/${student.assignmentsTotal}</div><div class="stat-sub">2 pending this week</div></div>
+    <div class="card"><div class="card-label">Next Exam</div>
+      <div class="stat-num" style="font-size:22px;">${student.nextExam.subject}</div><div class="stat-sub">${student.nextExam.date} · ${student.nextExam.time}</div></div>
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <div class="card">
+      <div class="card-label">Academic performance by subject</div>
+      ${student.subjects.map(s=>`
+        <div class="subj-row">
+          <div>${s.name}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${s.score}%; background:${barColor(s.score)};"></div></div>
+          <div class="subj-score">${s.score}%</div>
+        </div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="card-label">🤖 AI Recommendation</div>
+      <div class="reco">
+        <div class="reco-title">⚠ Focus area: ${worst.name}</div>
+        <ul>
+          <li>Attend the next <b>${x}</b> classes to bring overall attendance back to 75%.</li>
+          <li>Complete the pending ${worst.name} assignment before Friday.</li>
+          <li>Revise Unit 3 — flagged low in your last internal.</li>
+        </ul>
+      </div>
+      <div class="card-label" style="margin-top:18px;">Recent notices</div>
+      ${student.notifications.slice(0,3).map(n=>`
+        <div class="notice">
+          <div class="dot" style="background:var(--${n.type==='red'?'red':n.type==='amber'?'amber':'green'});"></div>
+          <div><div class="notice-text">${n.text}</div><div class="notice-time">${n.time}</div></div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+function renderStudentSubjects(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("Subjects & Marks", "Semester 5") + `
+  <div class="card">
+    <table>
+      <tr><th>Subject</th><th>Internal Marks</th><th>Attendance</th><th>Trend</th><th>Status</th></tr>
+      ${student.subjects.map(s=>{
+        const r = riskLevel(s.attendance, s.score, 0);
+        return `<tr><td>${s.name}</td><td class="mono">${s.score}%</td><td class="mono">${s.attendance}%</td>
+        <td class="mono" style="color:${s.score>75?'var(--green)':'var(--slate)'}">${s.score>75?'↑ steady':'↓ watch'}</td>
+        <td><span class="pill ${pillClass(r.color)}">${r.level} risk</span></td></tr>`;
+      }).join('')}
+    </table>
+  </div>
+  <p class="section-note">Marks are pulled from faculty uploads in real time — no separate "check portal" needed.</p>`;
+}
+function renderStudentAttendance(){
+  const m = document.getElementById('mainContent');
+  const x = classesNeededFor75(student.attendedTotal.P, student.attendedTotal.T);
+  m.innerHTML = pageHead("Attendance", "Auto-calculated from faculty attendance marking") + `
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-label">Subject-wise attendance</div>
+      ${student.subjects.map(s=>`
+        <div class="subj-row">
+          <div>${s.name}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${s.attendance}%; background:${barColor(s.attendance)};"></div></div>
+          <div class="subj-score">${s.attendance}%</div>
+        </div>`).join('')}
+    </div>
+    <div class="card">
+      <div class="card-label">⚠ Attendance Risk Engine</div>
+      <p style="font-size:13px;line-height:1.6;">Overall attendance is <b>${student.attendedTotal.P}%</b>, below the 75% minimum required to sit university exams.</p>
+      <div class="reco">
+        <div class="reco-title">Required action</div>
+        <ul><li>Attend the next <b>${x} classes consecutively</b> to reach exactly 75%.</li>
+        <li>Prioritise AI/ML and OS — lowest attendance subjects.</li></ul>
+      </div>
+      <p class="section-note">Formula: classes needed x solves (present + x) / (total + x) = 0.75</p>
+    </div>
+  </div>`;
+}
+function renderStudentAssign(){
+  const m = document.getElementById('mainContent');
+  const items = [
+    {sub:"Java", title:"Assignment 3 — Multithreading", due:"Tomorrow, 11:59 PM", status:"Pending"},
+    {sub:"AI/ML", title:"Assignment 2 — Decision Trees", due:"29 Aug", status:"Pending"},
+    {sub:"DBMS", title:"Assignment 4 — Normalization", due:"22 Aug", status:"Submitted"},
+    {sub:"Maths III", title:"Assignment 2 — Laplace Transforms", due:"18 Aug", status:"Submitted"},
+  ];
+  m.innerHTML = pageHead("Assignments", "4 of 6 total") + `
+  <div class="card"><table>
+    <tr><th>Subject</th><th>Assignment</th><th>Due</th><th>Status</th></tr>
+    ${items.map(i=>`<tr><td>${i.sub}</td><td>${i.title}</td><td class="mono">${i.due}</td>
+    <td><span class="pill ${i.status==='Submitted'?'pill-green':'pill-amber'}">${i.status}</span></td></tr>`).join('')}
+  </table></div>`;
+}
+function renderStudentTimetable(){
+  const m = document.getElementById('mainContent');
+  const days = ["Mon","Tue","Wed","Thu","Fri"];
+  const slots = ["9:00","10:00","11:15","1:00","2:15"];
+  const grid = {
+    Mon:["DBMS","Java","Maths III","—","AI/ML Lab"], Tue:["OS","DBMS","—","Java Lab","Maths III"],
+    Wed:["AI/ML","OS","DBMS","—","Java"], Thu:["Maths III","AI/ML","OS Lab","OS Lab","—"],
+    Fri:["Java","Maths III","AI/ML","DBMS Lab","DBMS Lab"]
+  };
+  m.innerHTML = pageHead("Timetable", "Semester 5 · Section A") + `
+  <div class="card"><table>
+    <tr><th>Time</th>${days.map(d=>`<th>${d}</th>`).join('')}</tr>
+    ${slots.map((s,i)=>`<tr><td class="mono">${s}</td>${days.map(d=>`<td>${grid[d][i]}</td>`).join('')}</tr>`).join('')}
+  </table></div>`;
+}
+function renderStudentFees(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("Fees", "Synced from College ERP") + `
+  <div class="grid grid-3">
+    <div class="card"><div class="card-label">Semester 5 Fee</div><div class="stat-num">₹64,000</div><div class="stat-sub"><span class="pill pill-green">Paid</span> on 12 Jul 2026</div></div>
+    <div class="card"><div class="card-label">Hostel Fee</div><div class="stat-num">₹28,000</div><div class="stat-sub"><span class="pill pill-green">Paid</span> on 12 Jul 2026</div></div>
+    <div class="card"><div class="card-label">Exam Fee</div><div class="stat-num">₹1,500</div><div class="stat-sub"><span class="pill pill-amber">Due 30 Aug</span></div></div>
+  </div>`;
+}
+function renderStudentNotices(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("Notices", "Personalized — not a broadcast list") + `
+  <div class="card">
+    ${student.notifications.map(n=>`
+      <div class="notice">
+        <div class="dot" style="background:var(--${n.type==='red'?'red':n.type==='amber'?'amber':'green'});"></div>
+        <div><div class="notice-text">${n.text}</div><div class="notice-time">${n.time}</div></div>
+      </div>`).join('')}
+  </div>
+  <p class="section-note">Every student sees a different list here — generated from their own attendance, marks and deadlines, not a mass notice.</p>`;
+}
+
+/* ============ FACULTY VIEWS ============ */
+function renderFacultyDash(){
+  const m = document.getElementById('mainContent');
+  const atRisk = facultyStudents.filter(s=>riskLevel(s.attendance,s.marks,s.missing).level!=='Low').length;
+  const avgAtt = Math.round(facultyStudents.reduce((a,s)=>a+s.attendance,0)/facultyStudents.length);
+  m.innerHTML = pageHead(`${facultyMeta.subject} · ${facultyMeta.section}`, `${facultyStudents.length} students in your roster`) + `
+  <div class="grid grid-4">
+    <div class="card"><div class="card-label">Class Avg Attendance</div><div class="stat-num">${avgAtt}%</div></div>
+    <div class="card"><div class="card-label">At-Risk Students</div><div class="stat-num" style="color:var(--red);">${atRisk}</div><div class="stat-sub">flagged by AI engine today</div></div>
+    <div class="card"><div class="card-label">Pending Grading</div><div class="stat-num">12</div><div class="stat-sub">Assignment 3 submissions</div></div>
+    <div class="card"><div class="card-label">Next Class</div><div class="stat-num" style="font-size:22px;">10:00 AM</div><div class="stat-sub">Room 214 · Today</div></div>
+  </div>
+  <div class="card" style="margin-top:16px;">
+    <div class="card-label">Roster snapshot <span class="pill pill-amber">1 new at-risk since yesterday</span></div>
+    <table>
+      <tr><th>Student</th><th>Attendance</th><th>Marks</th><th>Missing</th><th>Risk</th></tr>
+      ${facultyStudents.map(s=>{
+        const r = riskLevel(s.attendance,s.marks,s.missing);
+        return `<tr><td><div class="name-cell">${s.name}<span class="id">${s.id}</span></div></td>
+        <td class="mono">${s.attendance}%</td><td class="mono">${s.marks}%</td><td class="mono">${s.missing}</td>
+        <td><span class="pill ${pillClass(r.color)}">${r.level}</span></td></tr>`;
+      }).join('')}
+    </table>
+  </div>`;
+}
+function renderFacultyAttendance(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("Mark Attendance", `${facultyMeta.subject} · ${facultyMeta.section} · Today`) + `
+  <div class="card">
+    <table>
+      <tr><th>Student</th><th>ID</th><th>Present</th></tr>
+      ${facultyStudents.map((s,i)=>`<tr><td>${s.name}</td><td class="mono">${s.id}</td>
+      <td><input type="checkbox" ${s.attendance>65?'checked':''} onchange="this.nextSibling"></td></tr>`).join('')}
+    </table>
+    <div style="margin-top:16px; display:flex; gap:10px;">
+      <button class="btn" onclick="markSubmitted()">Submit attendance</button>
+      <span id="submitMsg" class="section-note" style="margin:0; display:none;">Saved — student dashboards and the AI risk engine update instantly.</span>
+    </div>
+  </div>`;
+}
+function markSubmitted(){ document.getElementById('submitMsg').style.display='inline'; }
+function renderFacultyMarks(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("Upload Marks", `Internal Assessment 2 · ${facultyMeta.subject}`) + `
+  <div class="card">
+    <table>
+      <tr><th>Student</th><th>ID</th><th>Marks (out of 100)</th></tr>
+      ${facultyStudents.map(s=>`<tr><td>${s.name}</td><td class="mono">${s.id}</td>
+      <td><input class="mono" style="width:60px;padding:6px;border:1px solid var(--line);" value="${s.marks}"></td></tr>`).join('')}
+    </table>
+    <div style="margin-top:16px; display:flex; gap:10px;">
+      <button class="btn" onclick="markSubmitted()">Publish marks</button>
+      <span id="submitMsg" class="section-note" style="margin:0; display:none;">Published — students notified, risk scores recalculated.</span>
+    </div>
+  </div>`;
+}
+function renderFacultyRisk(){
+  const m = document.getElementById('mainContent');
+  const ranked = [...facultyStudents].map(s=>({...s, r:riskLevel(s.attendance,s.marks,s.missing)}))
+    .sort((a,b)=> ({High:2,Medium:1,Low:0}[b.r.level]) - ({High:2,Medium:1,Low:0}[a.r.level]));
+  m.innerHTML = pageHead("AI Academic Risk Detection", "Ranked automatically — attendance + marks + missing work") + `
+  <div class="card">
+    <table>
+      <tr><th>Student</th><th>Attendance</th><th>Avg Marks</th><th>Missing Assign.</th><th>Risk</th><th></th></tr>
+      ${ranked.map(s=>`<tr><td><div class="name-cell">${s.name}<span class="id">${s.id}</span></div></td>
+      <td class="mono">${s.attendance}%</td><td class="mono">${s.marks}%</td><td class="mono">${s.missing}</td>
+      <td><span class="pill ${pillClass(s.r.color)}">${s.r.level}</span></td>
+      <td>${s.r.level!=='Low'?'<button class="btn-ghost" onclick="markSubmitted()">Notify</button>':''}</td></tr>`).join('')}
+    </table>
+    <span id="submitMsg" class="section-note" style="display:none;">Alert sent to student and logged for HOD review.</span>
+  </div>
+  <div class="card" style="margin-top:16px;">
+    <div class="card-label">Highest-risk case — ${ranked[0].name}</div>
+    <p style="font-size:13px;line-height:1.6;">Attendance ${ranked[0].attendance}% · Average marks ${ranked[0].marks}% · ${ranked[0].missing} missing assignments → classified <b style="color:var(--${ranked[0].r.color})">${ranked[0].r.level} risk</b> and auto-notified.</p>
+  </div>`;
+}
+function renderFacultyAnnounce(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("Send Announcement", "Targeted, not broadcast") + `
+  <div class="card">
+    <div class="card-label">Audience</div>
+    <div style="display:flex; gap:8px; margin-bottom:14px;">
+      <span class="pill pill-amber">All of DBMS Sec A</span>
+      <span class="pill pill-red">At-risk only (3)</span>
+      <span class="pill pill-green">Attendance &lt; 75% (3)</span>
+    </div>
+    <div class="card-label">Message</div>
+    <textarea style="width:100%; min-height:90px; border:1px solid var(--line); padding:10px; font-family:'IBM Plex Sans'; font-size:13px;" placeholder="e.g. Extra doubt-clearing session for AI/ML this Saturday, 10 AM, Room 214."></textarea>
+    <div style="margin-top:14px;">
+      <button class="btn" onclick="markSubmitted()">Send now</button>
+      <span id="submitMsg" class="section-note" style="margin-left:10px; display:none;">Sent — each recipient sees it on their own notice feed.</span>
+    </div>
+  </div>`;
+}
+
+/* ============ ADMIN VIEWS ============ */
+function renderAdminDash(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("Department Analytics", "CSE · Live") + `
+  <div class="grid grid-4">
+    <div class="card"><div class="card-label">Total Students</div><div class="stat-num">${deptStats.totalStudents.toLocaleString()}</div></div>
+    <div class="card"><div class="card-label">Avg Attendance</div><div class="stat-num">${deptStats.avgAttendance}%</div></div>
+    <div class="card"><div class="card-label">At-Risk Students</div><div class="stat-num" style="color:var(--red);">${deptStats.atRisk}</div></div>
+    <div class="card"><div class="card-label">Avg CGPA</div><div class="stat-num">${deptStats.avgCGPA}</div></div>
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <div class="card">
+      <div class="card-label">Attendance by department</div>
+      <div class="chartbar-wrap">
+        ${deptStats.byDept.map(d=>`
+          <div class="chartbar-col">
+            <div class="chartbar-val">${d.attendance}%</div>
+            <div class="chartbar" style="height:${d.attendance*1.5}px; background:${barColor(d.attendance)};"></div>
+            <div class="chartbar-lbl">${d.name}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Pending assignments</div>
+      <div class="stat-num">${deptStats.pendingAssignments}</div>
+      <div class="stat-sub">across all sections, this week</div>
+      <div class="card-label" style="margin-top:20px;">Risk breakdown</div>
+      <div class="subj-row"><div>High risk</div><div class="bar-track"><div class="bar-fill" style="width:${137/2450*100*6}%; background:var(--red);"></div></div><div class="subj-score">137</div></div>
+      <div class="subj-row"><div>Medium risk</div><div class="bar-track"><div class="bar-fill" style="width:${312/2450*100*3}%; background:var(--amber);"></div></div><div class="subj-score">~340</div></div>
+      <div class="subj-row"><div>On track</div><div class="bar-track"><div class="bar-fill" style="width:88%; background:var(--green);"></div></div><div class="subj-score">~1973</div></div>
+    </div>
+  </div>`;
+}
+function renderAdminDept(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("Department Attendance", "All departments · this semester") + `
+  <div class="card"><table>
+    <tr><th>Department</th><th>Avg Attendance</th><th>Status</th></tr>
+    ${deptStats.byDept.map(d=>`<tr><td>${d.name}</td><td class="mono">${d.attendance}%</td>
+    <td><span class="pill ${d.attendance>=80?'pill-green':d.attendance>=75?'pill-amber':'pill-red'}">${d.attendance>=80?'Healthy':d.attendance>=75?'Watch':'Action needed'}</span></td></tr>`).join('')}
+  </table></div>`;
+}
+function renderAdminWorkflow(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("Automation Workflow", "What runs without a human clicking anything") + `
+  <div class="card">
+    <div class="card-label">Attendance risk pipeline</div>
+    <div class="flow">
+      <div class="flow-step">Attendance updated</div><div class="flow-arrow">→</div>
+      <div class="flow-step">AI engine analyzes</div><div class="flow-arrow">→</div>
+      <div class="flow-step hot">Below 75%?</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Calculate classes needed</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Generate warning</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Notify student</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Notify faculty</div>
+    </div>
+    <p class="section-note">Same pipeline pattern is reused for marks drops, missed assignments and fee due dates — only the trigger condition changes.</p>
+  </div>`;
+}
+function renderAdminERP(){
+  const m = document.getElementById('mainContent');
+  m.innerHTML = pageHead("ERP Integration", "How this connects to the college's existing system") + `
+  <div class="card">
+    <div class="card-label">Data flow</div>
+    <div class="flow">
+      <div class="flow-step">College ERP</div><div class="flow-arrow">→</div>
+      <div class="flow-step">REST API</div><div class="flow-arrow">→</div>
+      <div class="flow-step">SmartCampus</div><div class="flow-arrow">→</div>
+      <div class="flow-step">AI Engine</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Student / Faculty / Admin</div>
+    </div>
+  </div>
+  <div class="grid grid-3" style="margin-top:16px;">
+    <div class="card"><div class="card-label">Auth</div><div style="font-size:13px;">JWT + role-based access control, mapped to existing ERP roles.</div></div>
+    <div class="card"><div class="card-label">Sync</div><div style="font-size:13px;">REST APIs and webhooks for live attendance/marks; CSV/Excel import as fallback.</div></div>
+    <div class="card"><div class="card-label">No live ERP yet?</div><div style="font-size:13px;">This demo runs on a mock ERP dataset — same API shape, swap the base URL to go live.</div></div>
+  </div>`;
+}
+
+/* ============ CHATBOT ============ */
+function toggleChat(){ document.getElementById('chatPanel').classList.toggle('open'); }
+function seedChat(role){
+  const body = document.getElementById('chatBody');
+  body.innerHTML = `<div class="msg bot">Hi, I'm EduBot. ${role==='student'?"Ask me about your attendance, marks or next exam.":role==='faculty'?"Ask me about your class attendance or at-risk students.":"Ask me about department-level stats."}</div>`;
+  const suggest = document.getElementById('chatSuggest');
+  const chips = role==='student'
+    ? ["What is my attendance?","When is my next exam?","Am I at risk?"]
+    : role==='faculty'
+    ? ["How many students are at risk?","Class average attendance?"]
+    : ["Department-wide at-risk count?","Which dept has lowest attendance?"];
+  suggest.innerHTML = chips.map(c=>`<div class="chip" onclick="askChip('${c.replace(/'/g,"\\'")}')">${c}</div>`).join('');
+}
+function askChip(text){ document.getElementById('chatInput').value = text; sendChat(); }
+function sendChat(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  const body = document.getElementById('chatBody');
+  body.innerHTML += `<div class="msg user">${text}</div>`;
+  input.value='';
+  const reply = botReply(text.toLowerCase());
+  setTimeout(()=>{
+    body.innerHTML += `<div class="msg bot">${reply}</div>`;
+    body.scrollTop = body.scrollHeight;
+  }, 350);
+  body.scrollTop = body.scrollHeight;
+}
+function botReply(q){
+  if(currentRole==='student'){
+    if(q.includes('attend')){
+      const worst=[...student.subjects].sort((a,b)=>a.attendance-b.attendance)[0];
+      return `Your overall attendance is ${student.attendedTotal.P}%. Lowest is ${worst.name} at ${worst.attendance}%.`;
+    }
+    if(q.includes('exam')) return `Your next exam is ${student.nextExam.subject} on ${student.nextExam.date} at ${student.nextExam.time}.`;
+    if(q.includes('risk')) return `Based on your AI/ML attendance (52%) and marks trend, you're flagged Medium–High risk in that subject. Check the Attendance tab for the recovery plan.`;
+    if(q.includes('marks') || q.includes('cgpa')) return `Your CGPA is ${student.cgpa}. Highest subject score is Maths III at 91%, lowest is AI/ML at 58%.`;
+    if(q.includes('fee')) return `Semester 5 and Hostel fees are Paid. Exam fee of ₹1,500 is due 30 Aug.`;
+    if(q.includes('assign')) return `You've completed ${student.assignmentsDone}/${student.assignmentsTotal} assignments. Java Assignment 3 is due tomorrow.`;
+    return `I can answer questions about attendance, marks, exams, fees or assignments — try one of the quick chips below.`;
+  }
+  if(currentRole==='faculty'){
+    const atRisk = facultyStudents.filter(s=>riskLevel(s.attendance,s.marks,s.missing).level!=='Low').length;
+    const avg = Math.round(facultyStudents.reduce((a,s)=>a+s.attendance,0)/facultyStudents.length);
+    if(q.includes('risk')) return `${atRisk} of your ${facultyStudents.length} sample students are flagged Medium or High risk.`;
+    if(q.includes('attend')) return `Class average attendance is ${avg}%.`;
+    return `I can tell you about class attendance, marks trends or at-risk students.`;
+  }
+  const atRiskDept = [...deptStats.byDept].sort((a,b)=>a.attendance-b.attendance)[0];
+  if(q.includes('risk')) return `${deptStats.atRisk} students are currently flagged at-risk department-wide.`;
+  if(q.includes('lowest') || q.includes('depart')) return `${atRiskDept.name} has the lowest average attendance at ${atRiskDept.attendance}%.`;
+  return `I can answer questions about department attendance, at-risk counts or CGPA averages.`;
+}
+</script>
+</body>
+</html>
